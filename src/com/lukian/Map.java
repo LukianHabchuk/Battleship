@@ -121,15 +121,15 @@ public class Map {
     private void markAreaUnderThePoint(Point point) {
         //checks if the value is higher than the maximum allowed and if the cell is empty on the y scale
         //marks area under the point
-        if (point.getY() + 1 < 10  && cells[point.getX()][point.getY() + 1] == ' ') {
+        if (point.getY() + 1 <= 10  && cells[point.getX()][point.getY() + 1] == ' ') {
             cells[point.getX()][point.getY() + 1] = CELL_AROUND_THE_BOAT_SYMBOL;
         }
         //marks area under the point from the left
-        if (point.getX() - 1 > 0 && point.getY() + 1 < 10 && cells[point.getX() - 1][point.getY() + 1] == ' ') {
+        if (point.getX() - 1 > 0 && point.getY() + 1 <= 10 && cells[point.getX() - 1][point.getY() + 1] == ' ') {
             cells[point.getX() - 1][point.getY() + 1] = CELL_AROUND_THE_BOAT_SYMBOL;
         }
         //marks area under the point from the right
-        if (point.getX() + 1 < 10 && point.getY() + 1 < 10 && cells[point.getX() + 1][point.getY() + 1] == ' ') {
+        if (point.getX() + 1 <= 10 && point.getY() + 1 <= 10 && cells[point.getX() + 1][point.getY() + 1] == ' ') {
             cells[point.getX() + 1][point.getY() + 1] = CELL_AROUND_THE_BOAT_SYMBOL;
         }
     }
