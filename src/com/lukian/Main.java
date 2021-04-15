@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
         Map map = new Map();
         map.draw();
-        map.generateTheBoat(new Boat(new Point(1,2), new Point(1, 5)));
+        map.generateTheBoat(new Boat(new Point(1,5), new Point(1, 10)));
         map.draw();
     }
 }

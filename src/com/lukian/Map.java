@@ -5,8 +5,8 @@ import com.lukian.entity.Point;
 
 import java.util.LinkedList;
 
-import static com.lukian.Constants.BOAT_SYMBOL;
-import static com.lukian.Constants.EMPTY_CELL_SYMBOL;
+import static com.lukian.Constants.*;
+import static com.lukian.Constants.CELL_AROUND_THE_BOAT_SYMBOL;
 
 public class Map {
 
@@ -61,6 +61,61 @@ public class Map {
     //the method puts a point of the boat on the cell
     private void setPointValue(Point point) {
         cells[point.getX()][point.getY()] = BOAT_SYMBOL;
+        markTheAreaAroundThePoint(point);
+    }
+
+    //marks the area around it in order to control the distance between the boats
+    private void markTheAreaAroundThePoint(Point point) {
+        markAreaFromTheLeftOfThePoint(point);
+        markAreaFromTheRightOfThePoint(point);
+        markAreaOverThePoint(point);
+        markAreaUnderThePoint(point);
+    }
+
+    private void markAreaOverThePoint(Point point) {
+        //checks if the value is below the minimum acceptable and if the cell is empty on the y scale
+        //marks area over the point
+        if (point.getY() - 1 > 0 && cells[point.getX()][point.getY() - 1] == ' ') {
+            cells[point.getX()][point.getY() - 1] = CELL_AROUND_THE_BOAT_SYMBOL;
+        }
+        //marks area over the point from the left
+        if (point.getX() - 1 > 0 && cells[point.getX() - 1][point.getY()-1] == ' ') {
+            cells[point.getX() - 1][point.getY() - 1] = CELL_AROUND_THE_BOAT_SYMBOL;
+        }
+        //marks area over the point from the right
+        if (point.getX() + 1 <= 10 && cells[point.getX() + 1][point.getY()-1] == ' ') {
+            cells[point.getX() + 1][point.getY() - 1] = CELL_AROUND_THE_BOAT_SYMBOL;
+        }
+    }
+
+    private void markAreaUnderThePoint(Point point) {
+        //checks if the value is higher than the maximum allowed and if the cell is empty on the y scale
+        //marks area under the point
+        if (point.getY() + 1 <= 10  && cells[point.getX()][point.getY() + 1] == ' ') {
+            cells[point.getX()][point.getY() + 1] = CELL_AROUND_THE_BOAT_SYMBOL;
+        }
+        //marks area under the point from the left
+        if (point.getX() - 1 > 0 && cells[point.getX() - 1][point.getY() + 1] == ' ') {
+            cells[point.getX() - 1][point.getY() + 1] = CELL_AROUND_THE_BOAT_SYMBOL;
+        }
+        //marks area under the point from the right
+        if (point.getX() + 1 <= 10 && cells[point.getX() + 1][point.getY() + 1] == ' ') {
+            cells[point.getX() + 1][point.getY() + 1] = CELL_AROUND_THE_BOAT_SYMBOL;
+        }
+    }
+
+    private void markAreaFromTheLeftOfThePoint(Point point) {
+        //marks area from the left of the point
+        if (point.getX() - 1 > 0 && cells[point.getX() - 1][point.getY()] == ' ') {
+            cells[point.getX() - 1][point.getY()] = CELL_AROUND_THE_BOAT_SYMBOL;
+        }
+    }
+
+    private void markAreaFromTheRightOfThePoint(Point point) {
+        //marks area from the right of the point
+        if (point.getX() + 1 <= 10 && cells[point.getX() + 1][point.getY()] == ' ') {
+            cells[point.getX() + 1][point.getY()] = CELL_AROUND_THE_BOAT_SYMBOL;
+        }
     }
 
 }
