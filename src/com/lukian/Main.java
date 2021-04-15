@@ -3,6 +3,7 @@ package com.lukian;
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
+        Map map = new Map();
+        map.draw();
     }
 }
