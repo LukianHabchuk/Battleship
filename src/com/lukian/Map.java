@@ -43,6 +43,11 @@ public class Map {
     }
 
     public boolean generateTheBoat(Boat boat) {
+
+        if (!isValid(boat)) {
+            return false;
+        }
+
         if (boat.getBegin().getX() != boat.getEnd().getX()) {
             for(int x = boat.getBegin().getX(); x <= boat.getEnd().getX(); x++) {
                 setPointValue(new Point(x, boat.getBegin().getY()));
@@ -55,6 +60,31 @@ public class Map {
             setPointValue(new Point(boat.getBegin().getX(), boat.getBegin().getY()));
         }
         boats.add(boat);
+        return true;
+    }
+
+    private boolean isValid(Boat boat) {
+        return arePointsHitTheCellBoundaries(boat) &&
+                areAllBoatCagesEmpty(boat);
+    }
+
+    //the method checks if the beginning and end of the boat are within the boundaries of the cells
+    private boolean arePointsHitTheCellBoundaries(Boat boat) {
+        return (boat.getBegin().getX() >= 1 && boat.getBegin().getY() >= 1
+                && boat.getBegin().getX() < WITH && boat.getBegin().getY() < HEIGHT)
+                && (boat.getEnd().getX() >= 1 && boat.getEnd().getY() >= 1
+                && boat.getEnd().getX() < WITH && boat.getEnd().getY() < HEIGHT);
+    }
+
+    //method checks if ALL boat points can be placed in EMPTY cells
+    private boolean areAllBoatCagesEmpty(Boat boat) {
+        for (int x = boat.getBegin().getX(); x <= boat.getEnd().getX(); x++) {
+            for (int y = boat.getBegin().getY(); y <= boat.getEnd().getY(); y++) {
+                if (cells[x][y] != EMPTY_CELL_SYMBOL) {
+                    return false;
+                }
+            }
+        }
         return true;
     }
 
@@ -91,15 +121,15 @@ public class Map {
     private void markAreaUnderThePoint(Point point) {
         //checks if the value is higher than the maximum allowed and if the cell is empty on the y scale
         //marks area under the point
-        if (point.getY() + 1 <= 10  && cells[point.getX()][point.getY() + 1] == ' ') {
+        if (point.getY() + 1 < 10  && cells[point.getX()][point.getY() + 1] == ' ') {
             cells[point.getX()][point.getY() + 1] = CELL_AROUND_THE_BOAT_SYMBOL;
         }
         //marks area under the point from the left
-        if (point.getX() - 1 > 0 && cells[point.getX() - 1][point.getY() + 1] == ' ') {
+        if (point.getX() - 1 > 0 && point.getY() + 1 < 10 && cells[point.getX() - 1][point.getY() + 1] == ' ') {
             cells[point.getX() - 1][point.getY() + 1] = CELL_AROUND_THE_BOAT_SYMBOL;
         }
         //marks area under the point from the right
-        if (point.getX() + 1 <= 10 && cells[point.getX() + 1][point.getY() + 1] == ' ') {
+        if (point.getX() + 1 < 10 && point.getY() + 1 < 10 && cells[point.getX() + 1][point.getY() + 1] == ' ') {
             cells[point.getX() + 1][point.getY() + 1] = CELL_AROUND_THE_BOAT_SYMBOL;
         }
     }
