@@ -148,4 +148,37 @@ public class Map {
         }
     }
 
+    public void hit(Point p) {
+        try {
+            if (cells[p.getX()][p.getY()] == BOAT_SYMBOL) {
+                System.out.println("DAMAGE");
+                damageTheBoat(p);
+                cells[p.getX()][p.getY()] = HIT_BOAT_SYMBOL;
+            } else {
+                System.out.println("You missed");
+                cells[p.getX()][p.getY()] = MISSED_BOAT_SYMBOL;
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("wrong number! You can choose between 1 and 10");
+        }
+        draw();
+    }
+
+    private void damageTheBoat(Point p) {
+        for (Boat b : boats) {
+            if (b.isPointBelongsToTheBoat(p)) {
+                if (b.getHelth() > 1) {
+                    b.decreaseHealth();
+                    System.out.println("decreasing");
+                } else {
+                    System.out.println("The boat have been destroyed");
+                    boats.remove(b);
+                }
+            }
+        }
+    }
+
+    public boolean isGameOver() {
+        return boats.isEmpty();
+    }
 }
