@@ -55,51 +55,54 @@ public class GameProcess {
 //            2 2 2
 //            3 3
 //            4
-        for (int i = 1; i <= 4; i++) {
-            System.out.println("please create " + (5-i) + " boat/s of " + i + " cell/s");
-            for (int j = 1; j <= 5-i; j++) {
-                System.out.println("Boat # " + j + " with " + i + " cells");
-                players.get(currentPlayerIndex).getMap().draw();
-
-                System.out.println("begin X and Y: ");
-                begin = new Point(scanner.nextInt(), scanner.nextInt());
-
-                //check is it 1-cell boat
-                if (i == 1) {
-                    end = begin;
-                    boat = new Boat(begin, end);
-                    if (!players.get(currentPlayerIndex).getMap().generateTheBoat(boat)) {
-                        System.out.println("wrong boat generation! Please try again!");
-                        j--;
-                    }
-                }
-                //else it is many cells boat
-                else {
-                    System.out.println("end X and Y: ");
-                    end = new Point(scanner.nextInt(), scanner.nextInt());
-                    boat = new Boat(begin, end);
-                    if (!isSizeOk(boat, i)) {
-                        System.out.println("wrong boat size! Please try again");
-                        j--;
-                    }
-                    else if (!players.get(currentPlayerIndex).getMap().generateTheBoat(boat)) {
-                        System.out.println("wrong boat generation! Please try again!");
-                        j--;
-                    }
-                }
-
-            }
-        }
-//        players.get(currentPlayerIndex).getMap().generateTheBoat(new Boat(new Point(2+2*currentPlayerIndex, 3+2*currentPlayerIndex), new Point(2+2*currentPlayerIndex, 4+2*currentPlayerIndex)));
+//        for (int i = 1; i <= 4; i++) {
+//            System.out.println("please create " + (5-i) + " boat/s of " + i + " cell/s");
+//            for (int j = 1; j <= 5-i; j++) {
+//                System.out.println("Boat # " + j + " with " + i + " cells");
+//                players.get(currentPlayerIndex).getMap().draw();
+//
+//                System.out.println("begin X and Y: ");
+//                begin = new Point(scanner.nextInt(), scanner.nextInt());
+//
+//                //check is it 1-cell boat
+//                if (i == 1) {
+//                    end = begin;
+//                    boat = new Boat(begin, end);
+//                    if (!players.get(currentPlayerIndex).getMap().generateTheBoat(boat)) {
+//                        System.out.println("wrong boat generation! Please try again!");
+//                        j--;
+//                    }
+//                }
+//                //else it is many cells boat
+//                else {
+//                    System.out.println("end X and Y: ");
+//                    end = new Point(scanner.nextInt(), scanner.nextInt());
+//                    boat = new Boat(begin, end);
+//                    if (!isSizeOk(boat, i)) {
+//                        System.out.println("wrong boat size! Please try again");
+//                        j--;
+//                    }
+//                    else if (!players.get(currentPlayerIndex).getMap().generateTheBoat(boat)) {
+//                        System.out.println("wrong boat generation! Please try again!");
+//                        j--;
+//                    }
+//                }
+//
+//            }
+//        }
+        players.get(currentPlayerIndex).getMap().generateTheBoat(new Boat(new Point(2+2*currentPlayerIndex, 3+2*currentPlayerIndex), new Point(2+2*currentPlayerIndex, 4+2*currentPlayerIndex)));
     }
 
+    //TODO: make it so that players do not see the initial location of enemy boats
     private void damagingProcess() {
         if (!wasHit) {
             currentPlayerIndex = currentPlayerIndex == 0 ? 1 : 0;
         }
         System.out.println("player " + currentPlayerIndex);
-        players.get(currentPlayerIndex).getMap().draw();
-        wasHit = players.get(currentPlayerIndex).getMap().hit(new Point(scanner.nextInt(), scanner.nextInt()));
+
+        int targetPlayerIndex = currentPlayerIndex == 0 ? 1 : 0;
+        players.get(targetPlayerIndex).getMap().draw();
+        wasHit = players.get(targetPlayerIndex).getMap().hit(new Point(scanner.nextInt(), scanner.nextInt()));
     }
 
     //checking boat size
