@@ -9,37 +9,42 @@ import java.util.Scanner;
 
 public class GameProcess {
 
-    private ArrayList<Player> players;
-    private Map m;
     private Scanner scanner = new Scanner(System.in);
+    private int currentPlayerIndex;
+    private boolean wasHit;
+
+    private ArrayList<Player> players;
 
     public GameProcess() {
-        players = new ArrayList<Player>();
-        m = new Map();
-        Scanner sc = new Scanner(System.in);
+        players = new ArrayList<>();
+
         System.out.println("choose name for player 1");
-        players.add(new Player(1, sc.nextLine()));
+        players.add(new Player(0, scanner.nextLine()));
         System.out.println("choose name for player 2");
-        players.add(new Player(2, sc.nextLine()));
+        players.add(new Player(1, scanner.nextLine()));
     }
 
     public void play() {
-//        for (int i = 0; i < players.size(); i++) {
-//            System.out.println("set the boats for player " + i);
-        setTheBoats(0);
-//        }
 
-        m.draw();
+        for (int i = 0; i < players.size(); i++) {
+            System.out.println("set the boats for player " + players.get(i).getName());
+            currentPlayerIndex = i;
+            setTheBoats();
+        }
 
-        while (!m.isGameOver()) {
-            m.hit(new Point(scanner.nextInt(), scanner.nextInt()));
+        currentPlayerIndex = players.get(0).getId();
+        wasHit = false;
+
+        while (!players.get(0).getMap().isGameOver() || players.get(1).getMap().isGameOver()) {
+            damagingProcess();
         }
         System.out.println("GG");
     }
 
-    private void setTheBoats(int playerIndex) {
-        Point begin, end;
-        Boat b;
+    private void setTheBoats() {
+        Point begin;
+        Point end;
+        Boat boat;
 
         System.out.println("1 ship - a row of 4 cells (\"four-deck\"; battleship)\n"
                 + "2 ships - a row of 3 cells (\"three-deck\"; cruisers)\n"
@@ -54,7 +59,7 @@ public class GameProcess {
             System.out.println("please create " + (5-i) + " boat/s of " + i + " cell/s");
             for (int j = 1; j <= 5-i; j++) {
                 System.out.println("Boat # " + j + " with " + i + " cells");
-                m.draw();
+                players.get(currentPlayerIndex).getMap().draw();
 
                 System.out.println("begin X and Y: ");
                 begin = new Point(scanner.nextInt(), scanner.nextInt());
@@ -62,34 +67,39 @@ public class GameProcess {
                 //check is it 1-cell boat
                 if (i == 1) {
                     end = begin;
-                    b = new Boat(begin, end);
-                    if (!m.generateTheBoat(b)) {
+                    boat = new Boat(begin, end);
+                    if (!players.get(currentPlayerIndex).getMap().generateTheBoat(boat)) {
                         System.out.println("wrong boat generation! Please try again!");
                         j--;
-                    } else {
-                        players.get(playerIndex).addBoat(b);
                     }
                 }
                 //else it is many cells boat
                 else {
                     System.out.println("end X and Y: ");
                     end = new Point(scanner.nextInt(), scanner.nextInt());
-                    b = new Boat(begin, end);
-                    if (!isSizeOk(b, i)) {
+                    boat = new Boat(begin, end);
+                    if (!isSizeOk(boat, i)) {
                         System.out.println("wrong boat size! Please try again");
                         j--;
                     }
-                    else if (!m.generateTheBoat(b)) {
+                    else if (!players.get(currentPlayerIndex).getMap().generateTheBoat(boat)) {
                         System.out.println("wrong boat generation! Please try again!");
                         j--;
-                    } else {
-                        players.get(playerIndex).addBoat(b);
                     }
                 }
 
             }
         }
-//        m.generateTheBoat(new Boat(new Point(2, 3), new Point(2, 4)));
+//        players.get(currentPlayerIndex).getMap().generateTheBoat(new Boat(new Point(2+2*currentPlayerIndex, 3+2*currentPlayerIndex), new Point(2+2*currentPlayerIndex, 4+2*currentPlayerIndex)));
+    }
+
+    private void damagingProcess() {
+        if (!wasHit) {
+            currentPlayerIndex = currentPlayerIndex == 0 ? 1 : 0;
+        }
+        System.out.println("player " + currentPlayerIndex);
+        players.get(currentPlayerIndex).getMap().draw();
+        wasHit = players.get(currentPlayerIndex).getMap().hit(new Point(scanner.nextInt(), scanner.nextInt()));
     }
 
     //checking boat size

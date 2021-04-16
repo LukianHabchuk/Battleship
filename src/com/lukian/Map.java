@@ -4,22 +4,22 @@ import com.lukian.entity.Boat;
 import com.lukian.entity.Point;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import static com.lukian.Constants.*;
-import static com.lukian.Constants.CELL_AROUND_THE_BOAT_SYMBOL;
 
 public class Map {
 
-    private static final int WITH = 11;
-    private static final int HEIGHT = 11;
-
-    private LinkedList<Boat> boats;
+    private List<Boat> boats;
     private char[][] cells;
 
     public Map() {
         cells = new char[WITH][HEIGHT];
-        boats = new LinkedList<Boat>();
+        boats = new LinkedList<>();
+        generateEmptyCells();
+    }
 
+    private void generateEmptyCells() {
         for(int y = 0; y < HEIGHT; y++) {
             for(int x = 0; x < HEIGHT; x++) {
                 cells[x][y] = EMPTY_CELL_SYMBOL;
@@ -148,12 +148,13 @@ public class Map {
         }
     }
 
-    public void hit(Point p) {
+    public boolean hit(Point p) {
         try {
             if (cells[p.getX()][p.getY()] == BOAT_SYMBOL) {
                 System.out.println("DAMAGE");
                 damageTheBoat(p);
                 cells[p.getX()][p.getY()] = HIT_BOAT_SYMBOL;
+                return true;
             } else {
                 System.out.println("You missed");
                 cells[p.getX()][p.getY()] = MISSED_BOAT_SYMBOL;
@@ -162,12 +163,13 @@ public class Map {
             System.out.println("wrong number! You can choose between 1 and 10");
         }
         draw();
+        return false;
     }
 
     private void damageTheBoat(Point p) {
         for (Boat b : boats) {
             if (b.isPointBelongsToTheBoat(p)) {
-                if (b.getHelth() > 1) {
+                if (b.getHealth() > 1) {
                     b.decreaseHealth();
                     System.out.println("decreasing");
                 } else {

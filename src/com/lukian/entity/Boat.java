@@ -4,12 +4,12 @@ public class Boat {
 
     private Point begin;
     private Point end;
-    private int helth;
+    private int health;
 
     public Boat(Point begin, Point end) {
         this.begin = begin;
         this.end = end;
-        this.helth = begin.getX() != end.getX() ? (end.getX() - begin.getX() + 1)
+        this.health = begin.getX() != end.getX() ? (end.getX() - begin.getX() + 1)
                 : begin.getY() != end.getY() ? (end.getY() - begin.getY() + 1)
                 : 1;
     }
@@ -22,8 +22,8 @@ public class Boat {
         return end;
     }
 
-    public int getHelth() {
-        return helth;
+    public int getHealth() {
+        return health;
     }
 
     public boolean isPointBelongsToTheBoat(Point p) {
@@ -37,7 +37,7 @@ public class Boat {
     }
 
     public void decreaseHealth() {
-        this.helth--;
+        this.health--;
     }
     
 }

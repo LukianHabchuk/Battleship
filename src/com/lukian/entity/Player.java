@@ -1,36 +1,28 @@
 package com.lukian.entity;
 
-import java.util.LinkedList;
+import com.lukian.Map;
 
 public class Player {
 
     private int id;
     private String name;
-    private LinkedList<Boat> boats;
+    private Map map;
 
     public Player(int id, String name) {
         this.id = id;
         this.name = name;
-        boats = new LinkedList<Boat>();
+        map = new Map();
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public LinkedList<Boat> getBoats() {
-        return boats;
-    }
-
-    public void setBoats(LinkedList<Boat> boats) {
-        this.boats = boats;
-    }
-
-    public void addBoat(Boat boat) {
-        this.boats.add(boat);
+    public Map getMap() {
+        return map;
     }
 }
