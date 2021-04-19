@@ -53,9 +53,9 @@ public class GameProcess {
                 + "3 ships - a row of 2 cells (\"double-deck\"; destroyers)\n"
                 + "4 ships - 1 cell (\"single-deck\"; torpedo boats)");
 
-        for (int i = 1; i <= 4; i++) {
-            System.out.println("please create " + (5-i) + " boat/s of " + i + " cell/s");
-            for (int j = 1; j <= 5-i; j++) {
+        for (int i = 1; i < 5; i++) {
+            System.out.println("please create " + (5 - i) + " boat/s of " + i + " cell/s");
+            for (int j = 1; j <= 5 - i; j++) {
                 System.out.println("Boat # " + j + " with " + i + " cells");
                 players.get(currentPlayerIndex).getMap().draw();
 
@@ -98,8 +98,8 @@ public class GameProcess {
     //checking boat size
     private boolean isSizeOk(Boat boat, int size) {
         return boat.getBegin().getX() != boat.getEnd().getX()
-                ? boat.getEnd().getX()-boat.getBegin().getX()+1 == size
-                : boat.getEnd().getY()-boat.getBegin().getY()+1 == size;
+                ? boat.getEnd().getX() - boat.getBegin().getX() + 1 == size
+                : boat.getEnd().getY() - boat.getBegin().getY() + 1 == size;
     }
 
 }
