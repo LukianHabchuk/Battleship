@@ -1,0 +1,18 @@
+
+U	java:S106+"9Replace this use of System.out or System.err by a logger.(Ÿ§×ö8—¶©Ğ/
+T
+java:S1135Z"2Complete the task associated to this TODO comment.(ŞĞ°Øıÿÿÿÿ8—¶©Ğ/
+U	java:S106a"9Replace this use of System.out or System.err by a logger.(ÿƒ 8ÒÁüĞ/
+U	java:S106"9Replace this use of System.out or System.err by a logger.(ú¡¡8—¶©Ğ/
+T	java:S106"9Replace this use of System.out or System.err by a logger.(ä‡º8—¶©Ğ/
+Z	java:S1063"9Replace this use of System.out or System.err by a logger.(ŠÇûÿÿÿÿ8—¶©Ğ/
+U	java:S106"9Replace this use of System.out or System.err by a logger.(§˜‡Ş8—¶©Ğ/
+t	java:S127K"XRefactor the code in order to not assign to this loop counter from within the loop body.(Â¨•ù8ìäûÑ/
+t	java:S127N"XRefactor the code in order to not assign to this loop counter from within the loop body.(Â¨•ù8ìäûÑ/
+U	java:S1069"9Replace this use of System.out or System.err by a logger.(±¿¸É8ìäûÑ/
+Z	java:S106;"9Replace this use of System.out or System.err by a logger.(ƒü„úÿÿÿÿ8ìäûÑ/
+U	java:S106>"9Replace this use of System.out or System.err by a logger.(·…²–8ìäûÑ/
+Z	java:S106E"9Replace this use of System.out or System.err by a logger.(Àãõöùÿÿÿÿ8ìäûÑ/
+Z	java:S106J"9Replace this use of System.out or System.err by a logger.(€óØ®ûÿÿÿÿ8ìäûÑ/
+Z	java:S106M"9Replace this use of System.out or System.err by a logger.(òÖã­úÿÿÿÿ8ìäûÑ/
+]	java:S125T"<This block of commented-out lines of code should be removed.(ë¤®ùÿÿÿÿ8ìäûÑ/

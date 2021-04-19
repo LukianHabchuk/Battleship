@@ -11,5 +11,6 @@ public class Constants {
     public static final char MISSED_BOAT_SYMBOL = 'O';
     public static final char EMPTY_CELL_SYMBOL = ' ';
     public static final char CELL_AROUND_THE_BOAT_SYMBOL = '+';
+    public static final String COORDINATE_SCALE = "1   2   3   4   5   6   7   8   9   10  Y";
 
 }

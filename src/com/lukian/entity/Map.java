@@ -1,7 +1,4 @@
-package com.lukian;
-
-import com.lukian.entity.Boat;
-import com.lukian.entity.Point;
+package com.lukian.entity;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -9,6 +6,9 @@ import java.util.List;
 import static com.lukian.Constants.*;
 
 public class Map {
+
+    private char right = 0x2192; //symbol for a beautiful primitive visualization of the arrow to the right
+    private char down = 0x2193; //symbol for a beautiful primitive visualization of an arrow pointing down
 
     private List<Boat> boats;
     private char[][] cells;
@@ -29,9 +29,7 @@ public class Map {
 
     //draw the playground
     public void draw() {
-        char right = 0x2192; //symbol for a beautiful primitive visualization of the arrow to the right
-        char down = 0x2193; //symbol for a beautiful primitive visualization of an arrow pointing down
-        System.out.println("X"+right+"1   2   3   4   5   6   7   8   9   10  Y"+down);
+        System.out.println("X"+right+ COORDINATE_SCALE +down);
         for(int y = 1; y < cells[1].length; y++) {
             System.out.print("| ");
             for(int x = 1; x < cells.length; x++) {
@@ -39,7 +37,22 @@ public class Map {
             }
             System.out.println(y);
         }
-        System.out.println("X" +right+ "1   2   3   4   5   6   7   8   9   10  Y"+down);
+        System.out.println("X" +right+ COORDINATE_SCALE +down);
+    }
+
+    //draw the playground for battle
+    public void drawBattleField() {
+        System.out.println("X"+right+ COORDINATE_SCALE +down);
+        for(int y = 1; y < cells[1].length; y++) {
+            System.out.print("| ");
+            for(int x = 1; x < cells.length; x++) {
+                if(cells[x][y] == BOAT_SYMBOL || cells[x][y] == EMPTY_CELL_SYMBOL)
+                    System.out.print(CELL_AROUND_THE_BOAT_SYMBOL + " | ");
+                else System.out.print(cells[x][y] + " | ");
+            }
+            System.out.println(y);
+        }
+        System.out.println("X" +right+ COORDINATE_SCALE +down);
     }
 
     public boolean generateTheBoat(Boat boat) {
@@ -162,21 +175,26 @@ public class Map {
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("wrong number! You can choose between 1 and 10");
         }
-        draw();
+        drawBattleField();
         return false;
     }
 
     private void damageTheBoat(Point p) {
-        for (Boat b : boats) {
-            if (b.isPointBelongsToTheBoat(p)) {
-                if (b.getHealth() > 1) {
-                    b.decreaseHealth();
-                    System.out.println("decreasing");
-                } else {
-                    System.out.println("The boat have been destroyed");
-                    boats.remove(b);
+        try {
+            for (Boat b : boats) {
+                if (b.isPointBelongsToTheBoat(p)) {
+                    if (b.getHealth() > 1) {
+                        b.decreaseHealth();
+                        System.out.println("decreasing");
+                    } else {
+                        System.out.println("The boat have been destroyed");
+                        boats.remove(b);
+                        drawBattleField();
+                    }
                 }
             }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 

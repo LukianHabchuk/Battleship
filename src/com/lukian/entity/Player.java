@@ -1,7 +1,5 @@
 package com.lukian.entity;
 
-import com.lukian.Map;
-
 public class Player {
 
     private int id;

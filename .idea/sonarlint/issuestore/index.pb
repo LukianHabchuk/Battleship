@@ -13,3 +13,5 @@ Q
 !src/com/lukian/entity/Player.java,d\d\dd27eebc0473dcd6ed1f014aaff9670b60fd01ec
 G
 src/com/lukian/Map.java,3\c\3c59f2348693a33f5c75b4dc8de1239e802cf5ba
+>
+Battleship.iml,1\3\13f9a1535ac18d799ad14935a1e60b01bbd81e12
