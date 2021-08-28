@@ -7,8 +7,8 @@ import static com.lukian.Constants.*;
 
 public class Map {
 
-    private final char right = 0x2192; //symbol for a beautiful primitive visualization of the arrow to the right
-    private final char down = 0x2193; //symbol for a beautiful primitive visualization of an arrow pointing down
+    private static final char RIGHT = 0x2192; //symbol for a beautiful primitive visualization of the arrow to the right
+    private static final char DOWN = 0x2193; //symbol for a beautiful primitive visualization of an arrow pointing down
 
     private final List<Boat> boats;
     private final char[][] cells;
@@ -29,7 +29,7 @@ public class Map {
 
     //draw the playground
     public void draw() {
-        System.out.println("X" + right + COORDINATE_SCALE + down);
+        System.out.println("X" + RIGHT + COORDINATE_SCALE + DOWN);
         for (var y = 1; y < cells[1].length; y++) {
             System.out.print("| ");
             for (var x = 1; x < cells.length; x++) {
@@ -37,12 +37,12 @@ public class Map {
             }
             System.out.println(y);
         }
-        System.out.println("X" + right + COORDINATE_SCALE + down);
+        System.out.println("X" + RIGHT + COORDINATE_SCALE + DOWN);
     }
 
     //draw the playground for battle
     public void drawBattleField() {
-        System.out.println("X" + right + COORDINATE_SCALE + down);
+        System.out.println("X" + RIGHT + COORDINATE_SCALE + DOWN);
         for (var y = 1; y < cells[1].length; y++) {
             System.out.print("| ");
             for (var x = 1; x < cells.length; x++) {
@@ -52,7 +52,7 @@ public class Map {
             }
             System.out.println(y);
         }
-        System.out.println("X" + right + COORDINATE_SCALE + down);
+        System.out.println("X" + RIGHT + COORDINATE_SCALE + DOWN);
     }
 
     public boolean generateTheBoat(Boat boat) {

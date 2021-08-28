@@ -7,6 +7,8 @@ import com.lukian.entity.Point;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static com.lukian.Constants.PLAYER_INFO;
+
 public class GameProcess {
 
     private final Scanner scanner = new Scanner(System.in);
@@ -48,10 +50,7 @@ public class GameProcess {
         Point end;
         Boat boat;
 
-        System.out.println("1 ship - a row of 4 cells (\"four-deck\"; battleship)\n"
-                + "2 ships - a row of 3 cells (\"three-deck\"; cruisers)\n"
-                + "3 ships - a row of 2 cells (\"double-deck\"; destroyers)\n"
-                + "4 ships - 1 cell (\"single-deck\"; torpedo boats)");
+        System.out.println(PLAYER_INFO);
 
         for (var i = 1; i < 5; i++) {
             System.out.println("please create " + (5 - i) + " boat/s of " + i + " cell/s");
