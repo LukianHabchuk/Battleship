@@ -19,12 +19,9 @@ public class GameProcess {
     private final ArrayList<Player> players;
 
     public GameProcess() {
-        players = new ArrayList<>();
-
-        System.out.println("choose name for player 1");
-        players.add(new Player(0, scanner.nextLine()));
-        System.out.println("choose name for player 2");
-        players.add(new Player(1, scanner.nextLine()));
+        players = Arrays.asList(
+                new Player(currentPlayerIndex, playerName(currentPlayerIndex)),
+                new Player(currentPlayerIndex, playerName(currentPlayerIndex)));
     }
 
     public void play() {
@@ -43,6 +40,16 @@ public class GameProcess {
             damagingProcess();
         }
         System.out.println("GG! The player " + players.get(currentPlayerIndex).getName() + " WIN");
+    }
+
+    private String playerName(int playerId) {
+        String name = "";
+        while (name.isEmpty()) {
+            System.out.println("choose name for player " + playerId);
+            name = scanner.nextLine();
+        }
+        currentPlayerIndex++;
+        return name;
     }
 
     private void setTheBoats() {
