@@ -39,19 +39,19 @@ public class Boat {
     }
 
     public int getPointCount() {
-        if (isNotTheSameX()) {
+        if (isStartNotMatchesEndX()) {
             return lengthBetween(end.getX(), begin.getX());
-        } else if (isNotTheSameY()) {
+        } else if (isStartNotMatchesEndY()) {
             return lengthBetween(end.getY(), begin.getY());
         }
         return 1;
     }
 
-    public boolean isNotTheSameX() {
+    public boolean isStartNotMatchesEndX() {
         return begin.getX() != end.getX();
     }
 
-    public boolean isNotTheSameY() {
+    public boolean isStartNotMatchesEndY() {
         return begin.getY() != end.getY();
     }
 

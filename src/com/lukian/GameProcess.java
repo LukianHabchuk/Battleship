@@ -61,9 +61,9 @@ public class GameProcess {
         System.out.println(PLAYER_INFO);
 
         for (var i = 1; i < 5; i++) {
-            System.out.println("please create " + (5 - i) + " boat/s of " + i + " cell/s");
+            System.out.printf("please create %d boat/s of %d cell/s%n", (5 - i), i);
             for (var j = 1; j <= 5 - i; j++) {
-                System.out.println("Boat # " + j + " with " + i + " cells");
+                System.out.printf("Boat # %d with %d cells%n", j, i);
                 players.get(currentPlayerIndex).getMap().draw(false);
 
                 System.out.println("begin X and Y: ");

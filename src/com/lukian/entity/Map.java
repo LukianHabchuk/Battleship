@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static com.lukian.Constants.*;
+import static com.lukian.MapValidator.*;
 
 public class Map {
 
@@ -38,15 +39,15 @@ public class Map {
 
     public boolean generateTheBoat(Boat boat) {
 
-        if (!isValid(boat)) {
+        if (!isValid(boat, cells)) {
             return false;
         }
 
-        if (boat.isNotTheSameX()) {
+        if (boat.isStartNotMatchesEndX()) {
             for (int x = boat.getBegin().getX(); x <= boat.getEnd().getX(); x++) {
                 setPointValue(new Point(x, boat.getBegin().getY()));
             }
-        } else if (boat.isNotTheSameY()) {
+        } else if (boat.isStartNotMatchesEndY()) {
             for (int y = boat.getBegin().getY(); y <= boat.getEnd().getY(); y++) {
                 setPointValue(new Point(boat.getBegin().getX(), y));
             }
@@ -59,7 +60,7 @@ public class Map {
 
     public boolean hit(Point point) {
         try {
-            if (cells[point.getX()][point.getY()] == BOAT_SYMBOL) {
+            if (isBoatInCell(cells[point.getX()][point.getY()])) {
                 System.out.println("DAMAGE");
                 damageTheBoat(point);
                 cells[point.getX()][point.getY()] = HIT_BOAT_SYMBOL;
@@ -96,15 +97,18 @@ public class Map {
     private void markAreaOverThePoint(Point point) {
         //checks if the value is below the minimum acceptable and if the cell is empty on the y scale
         //marks area over the point
-        if (point.getY() - 1 > 0 && isEmptyCell(point.getX(), point.getY() - 1)) {
+        if (isGreaterBorder(point.getY() - 1)
+                && isEmptyCell(cells[point.getX()][point.getY() - 1])) {
             cells[point.getX()][point.getY() - 1] = CELL_AROUND_THE_BOAT_SYMBOL;
         }
         //marks area over the point from the left
-        if (point.getX() - 1 > 0 && isEmptyCell(point.getX() - 1, point.getY() - 1)) {
+        if (isGreaterBorder(point.getX() - 1)
+                && isEmptyCell(cells[point.getX() - 1][point.getY() - 1])) {
             cells[point.getX() - 1][point.getY() - 1] = CELL_AROUND_THE_BOAT_SYMBOL;
         }
         //marks area over the point from the right
-        if (point.getX() + 1 < WITH && isEmptyCell(point.getX() + 1, point.getY() - 1)) {
+        if (isWidthLessBorder(point.getX() + 1)
+                && isEmptyCell(cells[point.getX() + 1][point.getY() - 1])) {
             cells[point.getX() + 1][point.getY() - 1] = CELL_AROUND_THE_BOAT_SYMBOL;
         }
     }
@@ -112,29 +116,34 @@ public class Map {
     private void markAreaUnderThePoint(Point point) {
         //checks if the value is higher than the maximum allowed and if the cell is empty on the y scale
         //marks area under the point
-        if (point.getY() + 1 < HEIGHT && isEmptyCell(point.getX(), point.getY() + 1)) {
+        if (isHeightLessBorder(point.getY() + 1)
+                && isEmptyCell(cells[point.getX()][point.getY() + 1])) {
             cells[point.getX()][point.getY() + 1] = CELL_AROUND_THE_BOAT_SYMBOL;
         }
         //marks area under the point from the left
-        if (point.getX() - 1 > 0 && point.getY() + 1 < HEIGHT && isEmptyCell(point.getX() - 1, point.getY() + 1)) {
+        if (isGreaterBorder(point.getX() - 1)
+                && isHeightLessBorder(point.getY() + 1)
+                && isEmptyCell(cells[point.getX() - 1][point.getY() + 1])) {
             cells[point.getX() - 1][point.getY() + 1] = CELL_AROUND_THE_BOAT_SYMBOL;
         }
         //marks area under the point from the right
-        if (point.getX() + 1 < WITH && point.getY() + 1 < HEIGHT && isEmptyCell(point.getX() + 1, point.getY() + 1)) {
+        if (isWidthLessBorder(point.getX() + 1)
+                && isHeightLessBorder(point.getY() + 1)
+                && isEmptyCell(cells[point.getX() + 1][point.getY() + 1])) {
             cells[point.getX() + 1][point.getY() + 1] = CELL_AROUND_THE_BOAT_SYMBOL;
         }
     }
 
     private void markAreaFromTheLeftOfThePoint(Point point) {
         //marks area from the left of the point
-        if (point.getX() - 1 > 0 && isEmptyCell(point.getX() - 1, point.getY())) {
+        if (isGreaterBorder(point.getX() - 1) && isEmptyCell(cells[point.getX() - 1][point.getY()])) {
             cells[point.getX() - 1][point.getY()] = CELL_AROUND_THE_BOAT_SYMBOL;
         }
     }
 
     private void markAreaFromTheRightOfThePoint(Point point) {
         //marks area from the right of the point
-        if (point.getX() + 1 < WITH && isEmptyCell(point.getX() + 1, point.getY())) {
+        if (isWidthLessBorder(point.getX() + 1) && isEmptyCell(cells[point.getX() + 1][point.getY()])) {
             cells[point.getX() + 1][point.getY()] = CELL_AROUND_THE_BOAT_SYMBOL;
         }
     }
@@ -165,38 +174,4 @@ public class Map {
             }
         }
     }
-
-    private boolean hasBoatOrEmpty(char cell) {
-        return cell == BOAT_SYMBOL || cell == EMPTY_CELL_SYMBOL;
-    }
-
-    private boolean isValid(Boat boat) {
-        return arePointsHitTheCellBoundaries(boat)
-                && areAllBoatCagesEmpty(boat);
-    }
-
-    //the method checks if the beginning and end of the boat are within the boundaries of the cells
-    private boolean arePointsHitTheCellBoundaries(Boat boat) {
-        return (boat.getBegin().getX() >= 1 && boat.getBegin().getY() >= 1
-                && boat.getBegin().getX() < WITH && boat.getBegin().getY() < HEIGHT)
-                && (boat.getEnd().getX() >= 1 && boat.getEnd().getY() >= 1
-                && boat.getEnd().getX() < WITH && boat.getEnd().getY() < HEIGHT);
-    }
-
-    //method checks if ALL boat points can be placed in EMPTY cells
-    private boolean areAllBoatCagesEmpty(Boat boat) {
-        for (int x = boat.getBegin().getX(); x <= boat.getEnd().getX(); x++) {
-            for (int y = boat.getBegin().getY(); y <= boat.getEnd().getY(); y++) {
-                if (!isEmptyCell(x,y)) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    private boolean isEmptyCell(int x, int y) {
-        return cells[x][y] == EMPTY_CELL_SYMBOL;
-    }
-
 }
