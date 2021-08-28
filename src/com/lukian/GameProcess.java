@@ -4,7 +4,8 @@ import com.lukian.entity.Boat;
 import com.lukian.entity.Player;
 import com.lukian.entity.Point;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 import static com.lukian.Constants.PLAYER_INFO;
@@ -16,7 +17,7 @@ public class GameProcess {
     private int targetPlayerIndex;
     private boolean wasHit;
 
-    private final ArrayList<Player> players;
+    private final List<Player> players;
 
     public GameProcess() {
         players = Arrays.asList(
@@ -63,7 +64,7 @@ public class GameProcess {
             System.out.println("please create " + (5 - i) + " boat/s of " + i + " cell/s");
             for (var j = 1; j <= 5 - i; j++) {
                 System.out.println("Boat # " + j + " with " + i + " cells");
-                players.get(currentPlayerIndex).getMap().draw();
+                players.get(currentPlayerIndex).getMap().draw(false);
 
                 System.out.println("begin X and Y: ");
                 begin = new Point(scanner.nextInt(), scanner.nextInt());
@@ -96,16 +97,14 @@ public class GameProcess {
 
         System.out.println("player: " + players.get(currentPlayerIndex).getName());
 
-        players.get(targetPlayerIndex).getMap().drawBattleField();
+        players.get(targetPlayerIndex).getMap().draw(true);
         wasHit = players.get(targetPlayerIndex).getMap()
                 .hit(new Point(scanner.nextInt(), scanner.nextInt()));
     }
 
     //checking boat size
     private boolean isSizeOk(Boat boat, int size) {
-        return boat.getBegin().getX() != boat.getEnd().getX()
-                ? boat.getEnd().getX() - boat.getBegin().getX() + 1 == size
-                : boat.getEnd().getY() - boat.getBegin().getY() + 1 == size;
+        return boat.getPointCount() == size;
     }
 
 }
