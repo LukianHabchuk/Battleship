@@ -9,12 +9,12 @@ import java.util.Scanner;
 
 public class GameProcess {
 
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
     private int currentPlayerIndex;
     private int targetPlayerIndex;
     private boolean wasHit;
 
-    private ArrayList<Player> players;
+    private final ArrayList<Player> players;
 
     public GameProcess() {
         players = new ArrayList<>();
@@ -27,7 +27,7 @@ public class GameProcess {
 
     public void play() {
 
-        for (int i = 0; i < players.size(); i++) {
+        for (var i = 0; i < players.size(); i++) {
             System.out.println("set the boats for player " + players.get(i).getName());
             currentPlayerIndex = i;
             setTheBoats();
@@ -53,9 +53,9 @@ public class GameProcess {
                 + "3 ships - a row of 2 cells (\"double-deck\"; destroyers)\n"
                 + "4 ships - 1 cell (\"single-deck\"; torpedo boats)");
 
-        for (int i = 1; i < 5; i++) {
+        for (var i = 1; i < 5; i++) {
             System.out.println("please create " + (5 - i) + " boat/s of " + i + " cell/s");
-            for (int j = 1; j <= 5 - i; j++) {
+            for (var j = 1; j <= 5 - i; j++) {
                 System.out.println("Boat # " + j + " with " + i + " cells");
                 players.get(currentPlayerIndex).getMap().draw();
 

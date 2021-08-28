@@ -7,11 +7,11 @@ import static com.lukian.Constants.*;
 
 public class Map {
 
-    private char right = 0x2192; //symbol for a beautiful primitive visualization of the arrow to the right
-    private char down = 0x2193; //symbol for a beautiful primitive visualization of an arrow pointing down
+    private final char right = 0x2192; //symbol for a beautiful primitive visualization of the arrow to the right
+    private final char down = 0x2193; //symbol for a beautiful primitive visualization of an arrow pointing down
 
-    private List<Boat> boats;
-    private char[][] cells;
+    private final List<Boat> boats;
+    private final char[][] cells;
 
     public Map() {
         cells = new char[WITH][HEIGHT];
@@ -20,8 +20,8 @@ public class Map {
     }
 
     private void generateEmptyCells() {
-        for (int y = 0; y < HEIGHT; y++) {
-            for (int x = 0; x < HEIGHT; x++) {
+        for (var y = 0; y < HEIGHT; y++) {
+            for (var x = 0; x < HEIGHT; x++) {
                 cells[x][y] = EMPTY_CELL_SYMBOL;
             }
         }
@@ -30,9 +30,9 @@ public class Map {
     //draw the playground
     public void draw() {
         System.out.println("X" + right + COORDINATE_SCALE + down);
-        for (int y = 1; y < cells[1].length; y++) {
+        for (var y = 1; y < cells[1].length; y++) {
             System.out.print("| ");
-            for (int x = 1; x < cells.length; x++) {
+            for (var x = 1; x < cells.length; x++) {
                 System.out.print(cells[x][y] + " | ");
             }
             System.out.println(y);
@@ -43,9 +43,9 @@ public class Map {
     //draw the playground for battle
     public void drawBattleField() {
         System.out.println("X" + right + COORDINATE_SCALE + down);
-        for (int y = 1; y < cells[1].length; y++) {
+        for (var y = 1; y < cells[1].length; y++) {
             System.out.print("| ");
-            for (int x = 1; x < cells.length; x++) {
+            for (var x = 1; x < cells.length; x++) {
                 if (cells[x][y] == BOAT_SYMBOL || cells[x][y] == EMPTY_CELL_SYMBOL)
                     System.out.print(CELL_AROUND_THE_BOAT_SYMBOL + " | ");
                 else System.out.print(cells[x][y] + " | ");
