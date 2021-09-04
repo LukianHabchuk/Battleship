@@ -26,8 +26,8 @@ public class GameProcess {
     }
 
     public void play() {
-
-        for (var i = 0; i < players.size(); i++) {
+        int playersCount = players.size();
+        for (var i = 0; i < playersCount; i++) {
             System.out.println("set the boats for player " + players.get(i).getName());
             currentPlayerIndex = i;
             setTheBoats();

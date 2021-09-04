@@ -2,9 +2,9 @@ package com.lukian.entity;
 
 public class Player {
 
-    private int id;
-    private String name;
-    private Map map;
+    private final int id;
+    private final String name;
+    private final Map map;
 
     public Player(int id, String name) {
         this.id = id;

@@ -48,8 +48,12 @@ public class MapValidator {
 
     //method checks if ALL boat points can be placed in EMPTY cells
     private static boolean areAllBoatCagesEmpty(Boat boat, char[][] cells) {
-        for (int x = boat.getBegin().getX(); x <= boat.getEnd().getX(); x++) {
-            for (int y = boat.getBegin().getY(); y <= boat.getEnd().getY(); y++) {
+        int beginX = boat.getBegin().getX();
+        int endX = boat.getEnd().getX();
+        int beginY = boat.getBegin().getY();
+        int endY = boat.getEnd().getY();
+        for (int x = beginX; x <= endX; x++) {
+            for (int y = beginY; y <= endY; y++) {
                 if (!isEmptyCell(cells[x][y])) {
                     return false;
                 }

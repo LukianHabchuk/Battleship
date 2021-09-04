@@ -25,10 +25,15 @@ public class Boat {
     }
 
     public boolean isPointBelongsToTheBoat(Point p) {
-        for (int x = begin.getX(); x <= end.getX(); x++) {
-            for (int y = begin.getY(); y <= end.getY(); y++) {
-                if (y == p.getY() && x == p.getX())
+        int beginX = begin.getX();
+        int beginY = begin.getY();
+        int endX = end.getX();
+        int endY = end.getY();
+        for (int x = beginX; x <= endX; x++) {
+            for (int y = beginY; y <= endY; y++) {
+                if (y == p.getY() && x == p.getX()) {
                     return true;
+                }
             }
         }
         return false;
