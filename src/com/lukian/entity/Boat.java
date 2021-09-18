@@ -2,8 +2,8 @@ package com.lukian.entity;
 
 public class Boat {
 
-    private final Point begin;
-    private final Point end;
+    private Point begin;
+    private Point end;
     private int health;
 
     public Boat(Point begin, Point end) {
@@ -44,9 +44,9 @@ public class Boat {
     }
 
     public int getPointCount() {
-        if (isStartNotMatchesEndX()) {
+        if (isStartNotMatchesEndX() && !isStartNotMatchesEndY()) {
             return lengthBetween(end.getX(), begin.getX());
-        } else if (isStartNotMatchesEndY()) {
+        } else if (isStartNotMatchesEndY() && !isStartNotMatchesEndX()) {
             return lengthBetween(end.getY(), begin.getY());
         }
         return 1;
@@ -61,7 +61,21 @@ public class Boat {
     }
 
     private int lengthBetween(int end, int begin) {
-        return end - begin + 1;
+        return getPositive(end - begin) + 1;
     }
 
+    private int getPositive(int length) {
+        if (length > 0) {
+            return length;
+        } else {
+            swap();
+            return length * (-1);
+        }
+    }
+
+    private void swap(){
+        Point temp = begin;
+        begin = end;
+        end = temp;
+    }
 }
